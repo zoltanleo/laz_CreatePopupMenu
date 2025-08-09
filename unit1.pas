@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ActnList, Menus,
-  StdCtrls, LazUTF8
+  StdCtrls, LCLProc, LazUTF8
   //, fgl
   , Generics.Collections
   ;
@@ -90,6 +90,10 @@ begin
       ppMnuItem.Caption:= TAction(actlist.Actions[i]).Caption;
       ppMnuItem.Action:= TAction(actlist.Actions[i]);
       ppMnuItem.ImageIndex:= TAction(actlist.Actions[i]).ImageIndex;
+
+      if ((TAction(actlist.Actions[i]).SecondaryShortCuts).Count > 0)
+        then ppMnuItem.ShortCut:= TextToShortCut(TAction(actlist.Actions[i]).SecondaryShortCuts[0])
+        else ppMnuItem.ShortCut:= TAction(actlist.Actions[i]).ShortCut;
       ppMnu.Items.Add(ppMnuItem);
     end;
 end;
@@ -132,7 +136,7 @@ end;
 
 procedure TForm1.act1_1Execute(Sender: TObject);
 begin
-//
+ Caption:= FormatDateTime('ss.zzz',now);
 end;
 
 procedure TForm1.act1_3Execute(Sender: TObject);
