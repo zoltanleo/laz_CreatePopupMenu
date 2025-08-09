@@ -32,6 +32,7 @@ type
     act2_3: TAction;
     act2_4: TAction;
     actlist: TActionList;
+    ImageList1: TImageList;
     Memo1: TMemo;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
@@ -39,13 +40,17 @@ type
     ppMnu: TPopupMenu;
     rbAct1: TRadioButton;
     rbAct2: TRadioButton;
+    procedure act1_1Execute(Sender: TObject);
+    procedure act1_3Execute(Sender: TObject);
+    procedure act2_2Execute(Sender: TObject);
+    procedure act2_3Execute(Sender: TObject);
+    procedure act2_4Execute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Memo1Click(Sender: TObject);
     procedure rbAct1Change(Sender: TObject);
   private
     FActAttrList: TActAttrList;
-    procedure GetActListByCatName(var aName: String; acList: TActionList; out ResultList: TStringList);
   public
     property ActAttrList: TActAttrList read FActAttrList;
   end;
@@ -70,7 +75,11 @@ var
 begin
 
   if (rbAct1.State = cbChecked) then CatName:= act1 else CatName:= act2;
+
   ppMnu.Items.Clear;
+  ppMnu.Images:= nil;
+
+  if Assigned(actlist.Images) then ppMnu.Images:= actlist.Images;
 
 
   for i := 0 to Pred(actlist.ActionCount) do
@@ -80,25 +89,9 @@ begin
       ppMnuItem.Name:= 'ppMnuItem' + TAction(actlist.Actions[i]).Name;
       ppMnuItem.Caption:= TAction(actlist.Actions[i]).Caption;
       ppMnuItem.Action:= TAction(actlist.Actions[i]);
+      ppMnuItem.ImageIndex:= TAction(actlist.Actions[i]).ImageIndex;
       ppMnu.Items.Add(ppMnuItem);
     end;
-
-end;
-
-procedure TForm1.GetActListByCatName(var aName: String; acList: TActionList;
-  out ResultList: TStringList);
-var
-  tmpName: String = '';
-  i: Integer = -1;
-begin
-  if Assigned(ResultList) then ResultList.Clear;
-  if (UTF8Trim(aName) = '') then Exit;
-
-  for i := 0 to Pred(acList.ActionCount) do
-  begin
-    tmpName:= UTF8Trim(acList.Actions[i].Category);
-    if ((tmpName <> '') and (ResultList.IndexOf(tmpName) = -1)) then ResultList.Add(tmpName);
-  end;
 end;
 
 procedure TForm1.Memo1Click(Sender: TObject);
@@ -135,6 +128,31 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   FActAttrList:= TActAttrList.Create;
   FActAttrList.Capacity:= 100;
+end;
+
+procedure TForm1.act1_1Execute(Sender: TObject);
+begin
+//
+end;
+
+procedure TForm1.act1_3Execute(Sender: TObject);
+begin
+//
+end;
+
+procedure TForm1.act2_2Execute(Sender: TObject);
+begin
+//
+end;
+
+procedure TForm1.act2_3Execute(Sender: TObject);
+begin
+//
+end;
+
+procedure TForm1.act2_4Execute(Sender: TObject);
+begin
+//
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
